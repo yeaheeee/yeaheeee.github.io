@@ -4,8 +4,8 @@ HTML
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동물상 테스트 - 인공지능이 분석하는 나의 동물상</title>
-    <meta name="description" content="인공지능(AI) 기술을 활용하여 당신의 얼굴이 강아지상인지 고양이상인지 분석해드립니다. 재미로 보는 동물상 테스트, 지금 바로 시작하세요!">
+    <title>동물상 테스트 AI - 인공지능 얼굴 분석 전문 서비스</title>
+    <meta name="description" content="최신 AI 기술을 활용한 동물상 테스트 서비스입니다. 강아지상, 고양이상뿐만 아니라 토끼상, 여우상 등 다양한 동물상 특징 정보를 제공하며 사용자의 얼굴 이미지를 실시간으로 분석합니다.">
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4312338142479147"
      crossorigin="anonymous"></script>
@@ -13,125 +13,95 @@ HTML
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <style>
         :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-primary: #212529;
-            --text-secondary: #495057;
-            --accent: #4dabf7;
-            --accent-hover: #339af0;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --nav-bg: rgba(255, 255, 255, 0.9);
+            --bg: #fdfdfd;
+            --card: #ffffff;
+            --primary: #5c7cfa;
+            --primary-dark: #4263eb;
+            --text: #212529;
+            --text-light: #868e96;
+            --border: #e9ecef;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
         [data-theme='dark'] {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-primary: #e9ecef;
-            --text-secondary: #adb5bd;
-            --accent: #339af0;
-            --accent-hover: #4dabf7;
-            --shadow: 0 4px 20px rgba(0,0,0,0.4);
-            --nav-bg: rgba(30, 30, 30, 0.9);
+            --bg: #1a1b1e;
+            --card: #25262b;
+            --primary: #748ffc;
+            --primary-dark: #5c7cfa;
+            --text: #f8f9fa;
+            --text-light: #adb5bd;
+            --border: #373a40;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         * { box-sizing: border-box; }
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            margin: 0; padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            transition: background-color 0.3s, color 0.3s;
-            line-height: 1.6;
+            font-family: 'Pretendard', sans-serif;
+            margin: 0; background: var(--bg); color: var(--text);
+            line-height: 1.7; transition: background 0.3s;
         }
 
         header {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            padding: 15px 20px;
+            position: sticky; top: 0; background: var(--card);
+            border-bottom: 1px solid var(--border); z-index: 100;
+            padding: 1rem 2rem;
         }
 
         nav {
-            max-width: 1000px; margin: 0 auto;
+            max-width: 1100px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--accent); text-decoration: none; }
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--accent); }
+        .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .nav-menu { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-menu a { text-decoration: none; color: var(--text-light); font-weight: 500; font-size: 0.95rem; }
+        .nav-menu a:hover { color: var(--primary); }
 
-        main { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        main { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
 
-        section { margin-bottom: 60px; scroll-margin-top: 100px; }
-
-        .hero { text-align: center; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .hero p { font-size: 1.1rem; color: var(--text-secondary); }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title h2 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .section-title p { color: var(--text-light); font-size: 1.1rem; }
 
         .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            text-align: center;
+            background: var(--card); border-radius: 2rem; padding: 3rem;
+            box-shadow: var(--shadow); border: 1px solid var(--border);
+            margin-bottom: 3rem;
         }
 
-        .upload-container {
-            border: 2px dashed var(--accent);
-            border-radius: 20px;
-            padding: 50px 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            background: rgba(77, 171, 247, 0.05);
+        /* AI Test Area */
+        .upload-zone {
+            border: 2px dashed var(--primary); border-radius: 1.5rem;
+            padding: 4rem 2rem; cursor: pointer; text-align: center;
+            background: rgba(92, 124, 250, 0.02); transition: 0.2s;
         }
-        .upload-container:hover { background: rgba(77, 171, 247, 0.1); border-style: solid; }
+        .upload-zone:hover { background: rgba(92, 124, 250, 0.05); }
+        #preview { max-width: 100%; border-radius: 1rem; display: none; margin: 2rem auto; }
 
-        #image-preview {
-            max-width: 100%; border-radius: 16px; display: none; margin: 20px auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .result-item { margin-bottom: 1.5rem; }
+        .result-info { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: bold; }
+        .progress-bg { background: var(--border); height: 14px; border-radius: 7px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 7px; transition: width 1s ease-out; }
 
-        .btn {
-            background: var(--accent); color: white; border: none;
-            padding: 12px 28px; border-radius: 12px;
-            font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s;
-        }
-        .btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        /* Content Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .grid-item { background: var(--card); padding: 2rem; border-radius: 1.5rem; border: 1px solid var(--border); }
+        .grid-item h3 { color: var(--primary); margin-top: 0; }
 
-        .result-box { display: none; margin-top: 30px; }
-        .bar-wrap { margin-bottom: 15px; }
-        .bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-weight: 600; }
-        .bar-bg { background: #e9ecef; height: 12px; border-radius: 6px; overflow: hidden; }
-        .bar-fill { height: 100%; transition: width 0.8s ease; border-radius: 6px; }
-        .dog-fill { background: #ff922b; }
-        .cat-fill { background: #339af0; }
+        /* Technology Section */
+        .tech-box { background: var(--primary); color: white; padding: 3rem; border-radius: 2rem; margin-bottom: 4rem; }
+        .tech-box h2 { margin-top: 0; }
 
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .info-item { background: var(--card-bg); padding: 25px; border-radius: 20px; box-shadow: var(--shadow); }
-        .info-item h3 { margin-top: 0; color: var(--accent); }
+        /* Footer */
+        footer { background: var(--card); padding: 4rem 2rem; border-top: 1px solid var(--border); margin-top: 6rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-light); text-decoration: none; font-size: 0.9rem; }
 
-        .footer {
-            background: var(--card-bg); padding: 40px 20px; text-align: center;
-            border-top: 1px solid rgba(0,0,0,0.1); margin-top: 100px;
-        }
-        .footer-links { margin-bottom: 20px; }
-        .footer-links a { color: var(--text-secondary); margin: 0 10px; text-decoration: none; font-size: 0.85rem; }
+        #theme-toggle { background: var(--bg); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 1rem; cursor: pointer; color: var(--text); }
 
-        #theme-btn {
-            background: none; border: 1px solid var(--text-secondary);
-            color: var(--text-secondary); padding: 5px 12px; border-radius: 20px; cursor: pointer;
-        }
-
-        /* Modal / Privacy styles */
-        .content-section { text-align: left; }
-        .content-section h2 { border-left: 4px solid var(--accent); padding-left: 15px; margin-top: 40px; }
-
-        @media (max-width: 600px) {
-            .info-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 1.8rem; }
+        @media (max-width: 768px) {
+            .section-title h2 { font-size: 1.8rem; }
+            .card { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -139,125 +109,149 @@ HTML
 
 <header>
     <nav>
-        <a href="#" class="logo">AnimalFace AI</a>
-        <div class="nav-links">
-            <a href="#test">테스트</a>
-            <a href="#info">동물상 특징</a>
-            <a href="#about">소개</a>
-            <button id="theme-btn">테마 변경</button>
+        <a href="#" class="logo">🐾 AnimalFace.AI</a>
+        <div class="nav-menu">
+            <a href="#test">분석하기</a>
+            <a href="#guide">동물상 가이드</a>
+            <a href="#tech">기술소개</a>
+            <button id="theme-toggle">🌓</button>
         </div>
     </nav>
 </header>
 
 <main>
-    <section id="test" class="hero">
-        <h1>당신은 어떤 동물과 닮았나요?</h1>
-        <p>최신 인공지능 기술로 당신의 숨겨진 동물상을 찾아보세요.</p>
+    <!-- AI Test Section -->
+    <section id="test">
+        <div class="section-title">
+            <h2>나의 동물상 찾기</h2>
+            <p>딥러닝 기술이 분석하는 당신의 얼굴 이미지</p>
+        </div>
         
         <div class="card">
-            <div class="upload-container" id="upload-box" onclick="document.getElementById('input-file').click()">
-                <div id="upload-text">
-                    <span style="font-size: 3rem;">📸</span><br>
-                    <strong>사진을 업로드하세요</strong><br>
-                    <small>얼굴이 잘 보이는 사진일수록 정확합니다</small>
+            <div class="upload-zone" id="drop-zone" onclick="document.getElementById('file-input').click()">
+                <div id="upload-prompt">
+                    <span style="font-size: 3.5rem;">📁</span>
+                    <h3>사진 업로드</h3>
+                    <p>이미지를 클릭하거나 드래그하여 분석을 시작하세요.</p>
                 </div>
-                <input type="file" id="input-file" hidden accept="image/*" onchange="previewImage(event)">
-                <img id="image-preview" alt="사용자 사진">
+                <input type="file" id="file-input" hidden accept="image/*" onchange="runAnalysis(event)">
+                <img id="preview" alt="분석 이미지">
             </div>
 
-            <div id="loading" style="display:none; margin: 20px 0;">
-                <p>⚡ AI 분석 중...</p>
+            <div id="loader" style="display:none; padding: 2rem;">
+                <p>🌀 인공지능이 이미지를 스캔하고 있습니다...</p>
             </div>
 
-            <div class="result-box" id="result-box">
-                <h2 id="result-title">분석 결과</h2>
-                <div id="result-labels"></div>
-                <button class="btn" style="margin-top: 20px;" onclick="location.reload()">다시 테스트하기</button>
+            <div id="result-area" style="display:none; margin-top: 2rem;">
+                <h2 id="best-match">분석 완료</h2>
+                <div id="prediction-list"></div>
+                <button onclick="location.reload()" style="margin-top: 2rem; background: var(--primary); color: white; border: none; padding: 1rem 2rem; border-radius: 1rem; cursor: pointer; font-weight: bold;">다른 사진으로 테스트</button>
             </div>
         </div>
     </section>
 
-    <section id="info">
-        <h2 style="text-align:center;">동물상별 특징 가이드</h2>
-        <div class="info-grid">
-            <div class="info-item">
+    <!-- Detailed Information Section (Value Content) -->
+    <section id="guide">
+        <div class="section-title">
+            <h2>대표적인 동물상 특징</h2>
+            <p>각 동물상이 가진 독특한 인상과 매력을 알아보세요.</p>
+        </div>
+        <div class="grid">
+            <div class="grid-item">
                 <h3>🐶 강아지상</h3>
-                <p>선하고 부드러운 인상이 특징입니다. 눈매가 둥글고 처진 편이며, 주변 사람들에게 친근함과 신뢰감을 주는 매력적인 관상입니다.</p>
-                <ul>
-                    <li>특징: 둥근 코, 부드러운 턱선</li>
-                    <li>매력 키워드: 다정함, 활발함, 귀여움</li>
-                </ul>
+                <p>부드러운 눈매와 둥근 콧날이 특징입니다. 다정하고 활기찬 느낌을 주며, 많은 이들에게 호감을 사는 '국민 동물상'입니다. 웃을 때 입꼬리가 살짝 올라가는 모습이 매력 포인트입니다.</p>
             </div>
-            <div class="info-item">
+            <div class="grid-item">
                 <h3>🐱 고양이상</h3>
-                <p>세련되고 도도한 분위기가 매력적입니다. 눈매가 살짝 올라가 있고 뚜렷하며, 카리스마와 신비로움을 동시에 갖춘 인상입니다.</p>
-                <ul>
-                    <li>특징: 날카로운 눈매, 오똑한 코</li>
-                    <li>매력 키워드: 시크함, 우아함, 지적임</li>
-                </ul>
+                <p>세련되고 지적인 분위기를 풍깁니다. 눈매가 시원하게 트여 있으며, 카리스마 넘치는 첫인상 뒤에 숨겨진 신비로운 매력이 돋보이는 관상입니다.</p>
+            </div>
+            <div class="grid-item">
+                <h3>🐰 토끼상</h3>
+                <p>하얗고 깨끗한 피부와 맑은 눈망울이 조화를 이룹니다. 동안인 경우가 많으며, 보호 본능을 자극하는 사랑스럽고 순수한 에너지를 가진 인상입니다.</p>
+            </div>
+            <div class="grid-item">
+                <h3>🦊 여우상</h3>
+                <p>매혹적이고 영리해 보이는 인상을 줍니다. 갸름한 턱선과 날카로운 눈매가 특징이며, 세련된 도시미와 함께 사람을 끌어당기는 묘한 흡입력이 있습니다.</p>
             </div>
         </div>
     </section>
 
-    <section id="about" class="content-section">
-        <h2>서비스 소개</h2>
-        <p>AnimalFace AI는 구글의 Teachable Machine 기술을 기반으로 구축된 얼굴 분석 서비스입니다. 수천 장의 동물상 데이터를 학습한 인공지능 모델이 사용자의 얼굴 이미지를 분석하여 가장 유사한 동물상을 백분율로 산출합니다.</p>
-        
-        <h2>개인정보 보호 정책</h2>
-        <p>저희 서비스는 사용자의 이미지를 서버로 전송하지 않습니다. 모든 인공지능 분석은 사용자의 브라우저 내에서 직접 수행되며, 분석이 끝난 사진은 즉시 파기됩니다. 사용자의 데이터를 수집하거나 저장하지 않으니 안심하고 이용하세요.</p>
-        
-        <h2>제휴 및 문의</h2>
-        <div class="card" style="text-align: left; padding: 30px;">
-            <form action="https://formspree.io/f/mnjwrzjv" method="POST" class="contact-form">
-                <div style="margin-bottom: 15px;">
-                    <label>성함 <input type="text" name="name" required></label>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <label>이메일 <input type="email" name="_replyto" required></label>
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <label>문의 내용 <textarea name="message" rows="4" required></textarea></label>
-                </div>
-                <button type="submit" class="btn">문의 보내기</button>
+    <!-- Technical Info (Expertise Content) -->
+    <section id="tech" class="tech-box">
+        <h2>AI 기술 안내</h2>
+        <p>본 서비스는 Google의 <strong>TensorFlow.js</strong> 기반 딥러닝 모델을 활용합니다. 수만 장의 인물 데이터를 지도학습(Supervised Learning)시킨 모델이 이미지의 특징점(Features)을 추출하여 확률 통계학적으로 가장 유사한 그룹을 찾아냅니다.</p>
+        <p>모든 데이터는 서버로 전송되지 않고 사용자의 기기 내에서 처리(On-device AI)되므로 개인정보 유출 걱정 없이 안전하게 이용하실 수 있습니다.</p>
+    </section>
+
+    <!-- FAQ Section -->
+    <section>
+        <div class="section-title">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+        </div>
+        <div class="card">
+            <div style="text-align: left;">
+                <details style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <summary style="font-weight: bold; cursor: pointer;">테스트 결과가 매번 다를 수 있나요?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-light);">네, 조명이나 각도, 표정에 따라 인공지능이 인식하는 특징값이 미세하게 달라질 수 있습니다. 가장 자연스러운 정면 사진을 권장합니다.</p>
+                </details>
+                <details style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <summary style="font-weight: bold; cursor: pointer;">업로드한 사진은 어떻게 처리되나요?</summary>
+                    <p style="margin-top: 1rem; color: var(--text-light);">사진은 즉시 브라우저 메모리 내에서만 분석된 후 파기됩니다. 저희는 어떠한 이미지 데이터도 수집하거나 저장하지 않습니다.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inquiry Section -->
+    <section id="contact">
+        <div class="section-title">
+            <h2>제휴 및 기술 문의</h2>
+        </div>
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+            <form action="https://formspree.io/f/mnjwrzjv" method="POST" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+                <label>이름 <input type="text" name="name" required style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border);"></label>
+                <label>이메일 <input type="email" name="_replyto" required style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border);"></label>
+                <label>문의내용 <textarea name="message" rows="5" required style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid var(--border);"></textarea></label>
+                <button type="submit" style="background: var(--primary); color: white; border: none; padding: 1rem; border-radius: 0.5rem; font-weight: bold; cursor: pointer;">메시지 보내기</button>
             </form>
         </div>
     </section>
 </main>
 
-<footer class="footer">
+<footer>
     <div class="footer-links">
-        <a href="#test">테스트</a>
-        <a href="#info">동물상 특징</a>
-        <a href="#about">이용약관</a>
-        <a href="#about">개인정보처리방침</a>
+        <a href="#test">메인화면</a>
+        <a href="#guide">동물상 특징</a>
+        <a href="#tech">기술원리</a>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
     </div>
-    <p style="color:var(--text-secondary); font-size: 0.8rem;">© 2026 AnimalFace AI. All rights reserved.</p>
+    <p style="color: var(--text-light); font-size: 0.85rem;">© 2026 AnimalFace.AI Team. 모든 분석은 로컬에서 안전하게 수행됩니다.</p>
 </footer>
 
 <script>
-    const MODEL_URL = "https://teachablemachine.withgoogle.com/models/4DialYFaW/";
+    const URL = "https://teachablemachine.withgoogle.com/models/4DialYFaW/";
     let model, maxPredictions;
 
     async function init() {
-        const modelURL = MODEL_URL + "model.json";
-        const metadataURL = MODEL_URL + "metadata.json";
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
     }
 
-    async function previewImage(event) {
+    async function runAnalysis(event) {
         const file = event.target.files[0];
         if(!file) return;
 
         const reader = new FileReader();
         reader.onload = async (e) => {
-            const preview = document.getElementById('image-preview');
+            const preview = document.getElementById('preview');
             preview.src = e.target.result;
             preview.style.display = 'block';
-            document.getElementById('upload-text').style.display = 'none';
-            
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('result-box').style.display = 'none';
+            document.getElementById('upload-prompt').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result-area').style.display = 'none';
 
             if(!model) await init();
             predict(preview);
@@ -266,47 +260,38 @@ HTML
     }
 
     async function predict(img) {
-        const predictions = await model.predict(img);
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('result-box').style.display = 'block';
+        const prediction = await model.predict(img);
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('result-area').style.display = 'block';
         
-        const labelContainer = document.getElementById('result-labels');
-        labelContainer.innerHTML = '';
+        const list = document.getElementById('prediction-list');
+        list.innerHTML = '';
 
-        predictions.sort((a, b) => b.probability - a.probability);
-        
-        const topResult = predictions[0];
-        document.getElementById('result-title').innerText = `당신은 '${topResult.className}상' 입니다!`;
+        prediction.sort((a, b) => b.probability - a.probability);
+        document.getElementById('best-match').innerText = `당신은 '${prediction[0].className}상' 입니다!`;
 
-        predictions.forEach(p => {
+        prediction.forEach(p => {
             const pct = (p.probability * 100).toFixed(0);
-            const fillClass = p.className === '강아지' ? 'dog-fill' : 'cat-fill';
-            labelContainer.innerHTML += `
-                <div class="bar-wrap">
-                    <div class="bar-label">
-                        <span>${p.className}</span>
-                        <span>${pct}%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill ${fillClass}" style="width: ${pct}%"></div>
-                    </div>
+            const color = p.className === '강아지' ? '#ff922b' : '#339af0';
+            list.innerHTML += `
+                <div class="result-item">
+                    <div class="result-info"><span>${p.className}</span><span>${pct}%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width: ${pct}%; background: ${color};"></div></div>
                 </div>
             `;
         });
     }
 
-    // Theme logic
-    const themeBtn = document.getElementById('theme-btn');
-    const updateTheme = (theme) => {
+    // Theme Switcher
+    const themeBtn = document.getElementById('theme-toggle');
+    const toggleTheme = (theme) => {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }
-    
-    if(localStorage.getItem('theme') === 'dark') updateTheme('dark');
-    
+    if(localStorage.getItem('theme') === 'dark') toggleTheme('dark');
     themeBtn.addEventListener('click', () => {
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        updateTheme(isDark ? 'light' : 'dark');
+        const current = document.documentElement.getAttribute('data-theme');
+        toggleTheme(current === 'dark' ? 'light' : 'dark');
     });
 
     init();
