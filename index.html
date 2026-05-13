@@ -1,0 +1,115 @@
+HTML
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Server 테스트 페이지</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --shadow: rgba(0,0,0,0.1);
+        }
+
+        [data-theme='dark'] {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-primary: #f0f2f5;
+            --text-secondary: #ccc;
+            --shadow: rgba(0,0,0,0.5);
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        p {
+            color: var(--text-secondary);
+        }
+        .status {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px var(--shadow);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle" id="theme-toggle">다크 모드</button>
+
+    <div class="card">
+        <h1>Hello, Live Server! 🚀</h1>
+        <p>코드를 수정하고 저장(Ctrl+S)하면 바로 반영됩니다.</p>
+        <div class="status">실행 중</div>
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleBtn.textContent = '라이트 모드';
+            }
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                toggleBtn.textContent = '다크 모드';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.textContent = '라이트 모드';
+            }
+        });
+    </script>
+</body>
+</html>
